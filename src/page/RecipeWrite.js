@@ -65,7 +65,7 @@ const RecipeWrite = () => {
 
   return (
     <div className="container mt-5">
-      <h1>레시피 작성</h1>
+      <h1>레시피 등록</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="recipeTitle">
           <Form.Label>레시피 제목</Form.Label>

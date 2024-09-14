@@ -83,8 +83,8 @@ const Profile = () => {
           <ul className="recipe-list">
             {/* 예시 데이터 */}
             {[
-              { id: 1, title: "야호" },
-              { id: 2, title: "무야호" },
+              { id: 1, title: "순두부 열라면" },
+              { id: 2, title: "우렁된장쌈밥" },
             ].map((recipe) => (
               <li key={recipe.id}>
                 <Link to={`/recipe-write/${recipe.id}`}>{recipe.title}</Link>
