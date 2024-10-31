@@ -13,7 +13,7 @@
 
 @media (max-width: 768px) {
   .search-bar {
-    width: 80%; /* 모바일에서는 너비를 80%로 */
+    width: 80%;
   }
 }
 
@@ -30,20 +30,34 @@
 }
 
 /* 비디오 갤러리 디자인 */
-.video-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+.video-gallery,
+.user-recipe-gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 한 줄에 5개 고정 */
+  gap: 8px;
+  justify-content: start;
+}
+
+@media (max-width: 768px) {
+  .video-gallery,
+  .user-recipe-gallery {
+    grid-template-columns: repeat(2, 1fr); /* 모바일에서는 한 줄에 2개 */
+    justify-content: center;
+  }
 }
 
 .video-item {
-  width: 300px;
   margin: 10px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 @media (max-width: 768px) {
   .video-item {
-    width: 100%; /* 작은 화면에서는 비디오 아이템이 전체 너비를 차지하도록 함 */
+    width: 100%;
     margin: 10px 0;
   }
 }
@@ -61,7 +75,7 @@
 
 /* 네비게이션 메뉴 스타일 */
 .navbar-nav .nav-link {
-  margin-left: 15px; /* 링크 사이에 여백 추가 */
+  margin-left: 15px;
 }
 
 /* Recipe Road 문구와 메뉴 사이의 여백 */
@@ -73,5 +87,84 @@
   .navbar-nav .nav-link {
     margin-left: 0;
     margin-top: 10px;
+  }
+}
+
+/* 출처 라벨 스타일 */
+.video-source-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* YouTube와 사용자 레시피 라벨 */
+.youtube-label {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+.user-recipe-label {
+  background-color: #81c784;
+  color: #fff;
+}
+
+/* 검색어 스타일 */
+.search-keywords {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* 추가 스타일 */
+.video-item,
+.user-recipe-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  background-color: #f5f5f5;
+  box-sizing: border-box;
+}
+
+.video-source-label,
+.user-recipe-label {
+  background-color: #e0e0e0;
+  padding: 8px;
+  border-bottom: 1px solid #b0bec5;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.youtube-label {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+.user-recipe-label {
+  background-color: #81c784;
+  color: #fff;
+}
+
+.search-keywords {
+  margin-top: 8px;
+  font-size: 0.9em;
+}
+
+.highlight {
+  background-color: #fff59d;
+  padding: 4px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .video-item,
+  .user-recipe-item {
+    width: 100%;
+    margin: 10px 0;
   }
 }
