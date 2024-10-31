@@ -110,9 +110,7 @@ const RecipeDisplay = () => {
         // 서버에서 유저 레시피 데이터를 가져옴
         const response = await axios.get("/api/user-recipes", {
           params: {
-            ingredients: query
-              .split(" ")
-              .filter((ingredient) => !ingredient.endsWith("장")),
+            ingredients: query.split(" "),
           },
         });
 
