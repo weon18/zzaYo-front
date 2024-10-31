@@ -47,9 +47,7 @@ const RecipeDisplay = () => {
         );
 
         // 비디오 데이터 처리
-        const ingredients = query
-          .split(" ")
-          .filter((ingredient) => !ingredient.endsWith("장"));
+        const ingredients = query.split(" ");
         const exactMatchVideos = response.data.items
           .filter((item) => {
             const title = item.snippet.title;
