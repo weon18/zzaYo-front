@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { Spinner } from "react-bootstrap"; // Bootstrap Spinner 사용
 
 const RecipeDisplay = () => {
   const [videos, setVideos] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const query = new URLSearchParams(useLocation().search).get("query");
 
   useEffect(() => {
@@ -30,7 +32,6 @@ const RecipeDisplay = () => {
       try {
         const searchQuery = refineSearchQuery(query);
 
-        // 유튜브 API를 사용하여 비디오 검색
         const response = await axios.get(
           `https://www.googleapis.com/youtube/v3/search`,
           {
@@ -46,14 +47,11 @@ const RecipeDisplay = () => {
           }
         );
 
-        // 비디오 데이터 처리
         const ingredients = query.split(" ");
         const exactMatchVideos = response.data.items
           .filter((item) => {
             const title = item.snippet.title;
             const description = item.snippet.description;
-
-            // 검색한 재료가 제목 or 설명에 포함되어 있는지 확인
             return ingredients.every(
               (ingredient) =>
                 title.includes(ingredient) || description.includes(ingredient)
@@ -69,8 +67,6 @@ const RecipeDisplay = () => {
           .filter((item) => {
             const title = item.snippet.title;
             const description = item.snippet.description;
-
-            // 재료 중 하나라도 제목 or 설명에 포함되어 있는지 확인 + 모든 재료가 포함된건 아닌 경우
             return (
               ingredients.some(
                 (ingredient) =>
@@ -88,7 +84,6 @@ const RecipeDisplay = () => {
             thumbnail: item.snippet.thumbnails.high.url,
           }));
 
-        // 정확히 일치하는 비디오 먼저, 그다음에 부분적으로 일치하는 비디오 추가
         const combinedVideos = [
           ...exactMatchVideos,
           ...partialMatchVideos.filter(
@@ -105,11 +100,8 @@ const RecipeDisplay = () => {
 
     const fetchUserRecipes = async () => {
       try {
-        // 서버에서 유저 레시피 데이터를 가져옴
         const response = await axios.get("/api/user-recipes", {
-          params: {
-            ingredients: query.split(" "),
-          },
+          params: { ingredients: query.split(" ") },
         });
 
         setUserRecipes(response.data);
@@ -118,72 +110,92 @@ const RecipeDisplay = () => {
       }
     };
 
+    const fetchData = async () => {
+      setIsLoading(true); // 로딩 시작
+      await Promise.all([fetchVideos(), fetchUserRecipes()]); // 두 요청이 모두 완료될 때까지 대기
+      setIsLoading(false); // 모든 데이터 로드 후 로딩 종료
+    };
+
     if (query) {
-      fetchVideos();
-      fetchUserRecipes();
+      fetchData(); // 데이터 로드 시작
     }
   }, [query]);
 
   return (
     <div className="recipe-display">
-      <div className="video-gallery">
-        {videos.length > 0 ? (
-          videos.map((video) => (
-            <div key={video.id} className="video-item">
-              <div className="video-source-label youtube-label">
-                <span>YouTube Video</span>
-              </div>
-              <a
-                href={`https://www.youtube.com/watch?v=${video.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="video-thumbnail"
-                />
-                <h3>{video.title}</h3>
-              </a>
-              <p className="search-keywords">
-                {query.split(" ").map((ingredient, index) => (
-                  <span key={index} className="highlight">
-                    {ingredient}
-                  </span>
-                ))}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>관련된 레시피 정보가 없습니다.</p>
-        )}
-      </div>
+      {isLoading ? (
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+          <p>로딩 중입니다. 잠시만 기다려 주세요...</p>
+        </div>
+      ) : (
+        <>
+          <div className="video-gallery">
+            {videos.length > 0 ? (
+              videos.map((video) => (
+                <div key={video.id} className="video-item">
+                  <div className="video-source-label youtube-label">
+                    <span>YouTube Video</span>
+                  </div>
+                  <a
+                    href={`https://www.youtube.com/watch?v=${video.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="video-thumbnail"
+                    />
+                    <h3>{video.title}</h3>
+                  </a>
+                  <p className="search-keywords">
+                    {query.split(" ").map((ingredient, index) => (
+                      <span key={index} className="highlight">
+                        {ingredient}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>관련된 레시피 정보가 없습니다.</p>
+            )}
+          </div>
 
-      <div className="user-recipe-gallery">
-        {userRecipes.length > 0 ? (
-          userRecipes.map((recipe) => (
-            <div key={recipe.id} className="user-recipe-item">
-              <div className="video-source-label user-recipe-label">
-                <span>User Submitted Recipe</span>
-              </div>
-              <h3>{recipe.title}</h3>
-              <p>{recipe.description}</p>
-              <a href={recipe.link} target="_blank" rel="noopener noreferrer">
-                레시피 보기
-              </a>
-              <p className="search-keywords">
-                {query.split(" ").map((ingredient, index) => (
-                  <span key={index} className="highlight">
-                    {ingredient}
-                  </span>
-                ))}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>관련된 유저 레시피 정보가 없습니다.</p>
-        )}
-      </div>
+          <div className="user-recipe-gallery">
+            {userRecipes.length > 0 ? (
+              userRecipes.map((recipe) => (
+                <div key={recipe.id} className="user-recipe-item">
+                  <div className="video-source-label user-recipe-label">
+                    <span>User Submitted Recipe</span>
+                  </div>
+                  <h3>{recipe.title}</h3>
+                  <p>{recipe.description}</p>
+                  <a
+                    href={recipe.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    레시피 보기
+                  </a>
+                  <p className="search-keywords">
+                    {query.split(" ").map((ingredient, index) => (
+                      <span key={index} className="highlight">
+                        {ingredient}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>관련된 유저 레시피 정보가 없습니다.</p>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
