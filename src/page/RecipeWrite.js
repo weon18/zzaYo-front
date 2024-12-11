@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import "../css/RecipeWrite.css";
 
 const RecipeWrite = () => {
   const [title, setTitle] = useState("");
@@ -64,9 +65,9 @@ const RecipeWrite = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1>레시피 등록</h1>
-      <Form onSubmit={handleSubmit}>
+    <div className="recipe-write-container">
+      <h1 className="recipe-title">레시피 등록</h1>
+      <Form onSubmit={handleSubmit} className="recipe-write-form">
         <Form.Group controlId="recipeTitle">
           <Form.Label>레시피 제목</Form.Label>
           <Form.Control
@@ -81,7 +82,7 @@ const RecipeWrite = () => {
         <Form.Group>
           <Form.Label>재료</Form.Label>
           {ingredients.map((ingredient, index) => (
-            <Row key={index} className="mb-3">
+            <Row key={index} className="ingredient-row">
               <Col sm={4}>
                 <Form.Control
                   type="text"

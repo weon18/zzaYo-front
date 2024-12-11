@@ -1,0 +1,138 @@
+/* RecipeWrite css */
+.recipe-register-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #f48c42;
+  text-align: center;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.recipe-write-container {
+  margin-top: 50px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.recipe-write-container h1 {
+  text-align: center;
+  color: #ff6347;
+  font-family: "Arial", sans-serif;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.recipe-write-form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-write-form .form-group {
+  margin-bottom: 25px;
+}
+
+.recipe-write-form .form-group label {
+  font-weight: bold;
+  color: #333;
+  font-size: 1rem;
+}
+
+.recipe-write-form .form-control {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  transition: border 0.3s ease-in-out;
+}
+
+.recipe-write-form .form-control:focus {
+  border-color: #ff6347;
+  box-shadow: 0 0 8px rgba(255, 99, 71, 0.5);
+}
+
+.recipe-write-form button {
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: bold;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.recipe-write-form .ingredient-row {
+  margin-bottom: 20px;
+}
+
+.recipe-write-form .ingredient-row .form-control {
+  margin-bottom: 12px;
+}
+
+.recipe-write-form .ingredient-row .btn-danger {
+  background-color: #dc3545;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.recipe-write-form .ingredient-row .btn-danger:hover {
+  background-color: #c82333;
+}
+
+.recipe-write-form .btn-primary {
+  background-color: #ff6347;
+  border: none;
+  font-size: 1rem;
+  padding: 12px;
+  font-weight: bold;
+}
+
+.recipe-write-form .btn-primary:hover {
+  background-color: #e55347;
+}
+
+.recipe-write-form .form-control::placeholder {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.recipe-write-form .ingredient-row input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.recipe-write-form .btn-primary,
+.recipe-write-form .btn-danger {
+  transition: transform 0.3s ease-in-out;
+}
+
+.recipe-write-form .btn-primary:hover,
+.recipe-write-form .btn-danger:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .recipe-write-container {
+    margin-top: 20px;
+    padding: 20px;
+  }
+
+  .recipe-write-form {
+    padding: 20px;
+  }
+
+  .recipe-write-form .form-control {
+    padding: 10px;
+  }
+
+  .recipe-write-form button {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+}
