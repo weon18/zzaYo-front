@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { Spinner } from "react-bootstrap"; // Bootstrap Spinner 사용
+import { Spinner } from "react-bootstrap";
 
 const RecipeDisplay = () => {
   const [videos, setVideos] = useState([]);

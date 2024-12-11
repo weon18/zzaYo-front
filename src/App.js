@@ -2,7 +2,6 @@ import "./App.css";
 import { Routes, Route } from "react-router";
 import MainSearch from "./page/MainSearch";
 import Login from "./page/Login";
-import Membership from "./page/Membership";
 import Profile from "./page/Profile";
 import RecipeWrite from "./page/RecipeWrite";
 import RecipeDisplay from "./page/RecipeDisplay";
@@ -16,7 +15,6 @@ function App() {
       <Routes>
         <Route path="/" element={<MainSearch />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/membership" element={<Membership />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/recipe-write" element={<RecipeWrite />} />
         <Route path="/recipe-display" element={<RecipeDisplay />} />

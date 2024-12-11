@@ -24,10 +24,7 @@ const Navbars = () => {
               마이프로필
             </Nav.Link>
             <Nav.Link as={Link} to="/login">
-              로그인
-            </Nav.Link>
-            <Nav.Link as={Link} to="/membership">
-              회원가입
+              로그인/회원가입
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
